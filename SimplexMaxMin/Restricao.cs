@@ -84,7 +84,7 @@ namespace SimplexMaxMin
                     Console.Write(" + ");
             }
 
-            string simbolo = tipoAlgoritmo == TipoAlgoritmo.Maximizacao ? ">" : "<";
+            string simbolo = tipoAlgoritmo == TipoAlgoritmo.Maximizacao ? "<" : ">";
 
             Console.Write($" {simbolo}= {Valores[Valores.Length - 1]} ");
         }

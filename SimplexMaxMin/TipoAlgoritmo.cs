@@ -8,7 +8,7 @@
         public string GetDescricao(int tipo)
         {
             if (tipo == Maximizacao)
-                return "Mazimização";
+                return "Maximização";
 
             if (tipo == Minimizacao)
                 return "Minimização";

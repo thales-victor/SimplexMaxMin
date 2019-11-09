@@ -69,8 +69,6 @@ namespace SimplexMaxMin
         #region ------------ PRIVATE METHODS ------------
         private static void Init()
         {
-            
-
             Console.Clear();
 
             Console.WriteLine("Para começar, você deve selecionar o tipo de Simplex que será usado");
@@ -132,7 +130,6 @@ namespace SimplexMaxMin
                     {
                         throw new Exception();
                     }
-                    break;
             }
         }
 
