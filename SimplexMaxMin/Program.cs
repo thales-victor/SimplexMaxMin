@@ -39,7 +39,8 @@ namespace SimplexMaxMin
 
                 foreach (var restricao in Algoritmo.Restricoes)
                 {
-                    restricao.ImprimirRestricao(Algoritmo.FuncaoObjetivo.Valores.Length, Algoritmo.TipoAlgoritmo, Algoritmo.Restricoes.Count);
+                    //restricao.ImprimirRestricao(Algoritmo.FuncaoObjetivo.Valores.Length, Algoritmo.TipoAlgoritmo, Algoritmo.Restricoes.Count);
+                    restricao.ImprimirRestricao(Algoritmo.FuncaoObjetivo.Valores.Length, Algoritmo.TipoAlgoritmo);
                     Console.WriteLine("");
                 }
             }

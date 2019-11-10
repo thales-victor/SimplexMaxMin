@@ -66,13 +66,14 @@ namespace SimplexMaxMin
             {
                 Console.Write($"{Valores[i - 1]}x{i}");
 
-                if (i <= tamanho)
+                if (i < tamanho)
                     Console.Write(" + ");
             }
 
             var alfabeto = new Alfabeto();
 
-            var length = forcarLoop ?? Valores.Length - tamanho - 1;
+            //var length = forcarLoop ?? Valores.Length - tamanho - 1;
+            var length = forcarLoop;
 
             for (int i = 0; i < length ; i++)
             {
