@@ -19,9 +19,10 @@ namespace SimplexMaxMin
 
             Console.WriteLine("Pressione F1 para alterar o tamanho da função objetivo");
             Console.WriteLine("Pressione F2 para inserir a função objetivo");
-            Console.WriteLine("Pressione F3 para inserir as restrições");
-            Console.WriteLine("Pressione F4 para solucionar o Simplex passo-a-passo");
-            Console.WriteLine("Pressione F5 para solucionar o Simplex até o final");
+            Console.WriteLine("Pressione F3 para alterar a quantidade das restrições");
+            Console.WriteLine("Pressione F4 para inserir as restrições");
+            Console.WriteLine("Pressione F5 para solucionar o Simplex passo-a-passo");
+            Console.WriteLine("Pressione F6 para solucionar o Simplex até o final");
 
             if (Algoritmo.FuncaoObjetivo.JaFoiCadastrado)
             {
@@ -82,6 +83,12 @@ namespace SimplexMaxMin
             Console.WriteLine("Agora, você deve determinar quantas variáveis a função objetivo terá");
             PressioneQualquerTeclaParaContinuar();
             SelecionarOpcaoMenu(ConsoleKey.F1);
+
+            Console.Clear();
+            Console.WriteLine("");
+            Console.WriteLine("Agora, você deve determinar quantas restrições o problema terá");
+            PressioneQualquerTeclaParaContinuar();
+            SelecionarOpcaoMenu(ConsoleKey.F3);
         }
 
         private static void SelecionarOpcaoMenu(ConsoleKey key)
@@ -100,7 +107,18 @@ namespace SimplexMaxMin
                     break;
                 case ConsoleKey.F3:
                     {
+                        Algoritmo.DefinirQuantidadeRestricoes();
+                    }
+                    break;
+                case ConsoleKey.F4:
+                    {
                         Algoritmo.InserirRestricao();
+                    }
+                    break;
+                case ConsoleKey.F6:
+                    {
+                        ResolverProblema resolverProblema = new ResolverProblema();
+                        resolverProblema.Resolver(Algoritmo);
                     }
                     break;
 

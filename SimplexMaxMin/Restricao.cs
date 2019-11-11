@@ -6,15 +6,15 @@ namespace SimplexMaxMin
 {
     public class Restricao
     {
-        public int[] Valores { get; set; }
+        public double[] Valores { get; set; }
 
-        public Restricao(int tamanho, int ordem, int tipoAlgoritmo)
+        public Restricao(int tamanho, int tipoAlgoritmo, int quantidade, int posicao)
         {
-            Valores = new int[tamanho + ordem + 1];
+            Valores = new double[tamanho + quantidade + 1];
 
-            Console.Clear();
+            //Console.Clear();
 
-            Console.WriteLine("### Inserir nova restrição ###");
+            Console.WriteLine("### Inserir a " + (posicao + 1) + "ª restrição ###");
             Console.WriteLine("");
             Console.WriteLine("");
 
@@ -34,7 +34,14 @@ namespace SimplexMaxMin
                 }
             }
 
-            Valores[tamanho + ordem - 1] = 1;
+            //Letra da Determinada restrição
+            Valores[tamanho + posicao] = 1;
+
+            //Letras de outras restrições
+            //for (int j = tamanho + posicao + 1; j < Valores.Length - 1; j++)
+            //{
+            //    Valores[j] = 0;
+            //}
 
             bool valorCorreto = false;
             while (!valorCorreto)
@@ -54,10 +61,13 @@ namespace SimplexMaxMin
 
             Console.WriteLine("");
             Console.WriteLine("OK. Tudo certo!");
-            Console.WriteLine("Sua restrição ficou assim:");
+            Console.WriteLine("Sua " + (posicao + 1) + "ª restrição ficou assim:");
             Console.WriteLine("");
 
             ImprimirRestricao(tamanho, tipoAlgoritmo);
+            Console.WriteLine("");
+            Console.WriteLine("");
+
         }
 
         public void ImprimirRestricao(int tamanho, int tipoAlgoritmo, int? forcarLoop = null)
@@ -75,9 +85,9 @@ namespace SimplexMaxMin
             //var length = forcarLoop ?? Valores.Length - tamanho - 1;
             var length = forcarLoop;
 
-            for (int i = 0; i < length ; i++)
+            for (int i = 0; i < length; i++)
             {
-                int valor = (i + tamanho + 1) < Valores.Length ? Valores[i + tamanho] : 0;
+                int valor = (i + tamanho + 1) < Valores.Length ? (int)Valores[i + tamanho] : 0;
 
                 Console.Write($"{valor}{alfabeto.Letras[i]}");
 
