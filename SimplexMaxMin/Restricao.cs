@@ -37,12 +37,6 @@ namespace SimplexMaxMin
             //Letra da Determinada restrição
             Valores[tamanho + posicao] = 1;
 
-            //Letras de outras restrições
-            //for (int j = tamanho + posicao + 1; j < Valores.Length - 1; j++)
-            //{
-            //    Valores[j] = 0;
-            //}
-
             bool valorCorreto = false;
             while (!valorCorreto)
             {

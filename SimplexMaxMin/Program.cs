@@ -77,18 +77,18 @@ namespace SimplexMaxMin
             Console.WriteLine("");
             Console.WriteLine("Pressione F1 para Maximização");
             Console.WriteLine("Pressione F2 para Minimização");
-
             SelecionarTipoSimplex(Console.ReadKey().Key);
-            Console.WriteLine("");
-            Console.WriteLine("Agora, você deve determinar quantas variáveis a função objetivo terá");
-            PressioneQualquerTeclaParaContinuar();
-            SelecionarOpcaoMenu(ConsoleKey.F1);
 
             Console.Clear();
             Console.WriteLine("");
             Console.WriteLine("Agora, você deve determinar quantas restrições o problema terá");
             PressioneQualquerTeclaParaContinuar();
             SelecionarOpcaoMenu(ConsoleKey.F3);
+
+            Console.WriteLine("");
+            Console.WriteLine("Agora, você deve determinar quantas variáveis a função objetivo terá");
+            PressioneQualquerTeclaParaContinuar();
+            SelecionarOpcaoMenu(ConsoleKey.F1);
         }
 
         private static void SelecionarOpcaoMenu(ConsoleKey key)

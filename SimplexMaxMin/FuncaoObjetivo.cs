@@ -7,6 +7,7 @@ namespace SimplexMaxMin
     public class FuncaoObjetivo
     {
         public int[] Valores { get; set; }
+        public int quantidadeVariaveis { get; set; }
         public bool JaFoiCadastrado { get; set; }
 
         public FuncaoObjetivo(int tamanho)
@@ -24,7 +25,7 @@ namespace SimplexMaxMin
             Console.WriteLine("");
 
             int count = 1;
-            while (count <= Valores.Length)
+            while (count <= quantidadeVariaveis)
             {
                 Console.Write($"Insira o valor de x{count}: ");
                 if (int.TryParse(Console.ReadLine(), out int valor))
@@ -40,23 +41,38 @@ namespace SimplexMaxMin
             Console.WriteLine("OK. Tudo certo!");
             Console.WriteLine("Sua função objetivo ficou assim:");
             Console.WriteLine("");
-            ImprimirFuncaoObjetivo();
+            ImprimirFuncaoObjetivo(true);
             Program.PressioneQualquerTeclaParaContinuar();
             Program.Menu();
         }
 
-        public void ImprimirFuncaoObjetivo()
+        public void ImprimirFuncaoObjetivo(bool EstaNoInicio)
         {
             Console.Write($"Z = ");
 
-            for (int i = 1; i <= Valores.Length; i++)
+            if (EstaNoInicio)
             {
-                Console.Write($"{Valores[i - 1]}x{i}");
+                for (int i = 1; i <= quantidadeVariaveis; i++)
+                {
+                    Console.Write($"{Valores[i - 1]}x{i}");
 
-                if (i < Valores.Length)
-                    Console.Write(" + ");
-                else
-                    Console.WriteLine("");
+                    if (i < quantidadeVariaveis)
+                        Console.Write(" + ");
+                    else
+                        Console.WriteLine("");
+                }
+            }
+            else
+            {
+                for (int i = 1; i <= Valores.Length; i++)
+                {
+                    Console.Write($"{Valores[i - 1]}x{i}");
+
+                    if (i < Valores.Length)
+                        Console.Write(" + ");
+                    else
+                        Console.WriteLine("");
+                }
             }
         }
 
@@ -76,10 +92,10 @@ namespace SimplexMaxMin
                 switch (Console.ReadKey().Key)
                 {
                     case ConsoleKey.F1:
-                            JaFoiCadastrado = false;
-                            return true;
+                        JaFoiCadastrado = false;
+                        return true;
                     case ConsoleKey.F2:
-                            return false;
+                        return false;
                     default:
                         {
                             Console.WriteLine("Opção Inválida!");
@@ -93,7 +109,7 @@ namespace SimplexMaxMin
             return true;
         }
 
-        public void DefinirTamanho()
+        public void DefinirTamanho(int qtdAlfabeto)
         {
             Console.Clear();
 
@@ -101,13 +117,14 @@ namespace SimplexMaxMin
 
             if (int.TryParse(Console.ReadLine(), out int tamanho))
             {
-                Valores = new int[tamanho];
+                Valores = new int[tamanho + qtdAlfabeto + 1];
+                quantidadeVariaveis = tamanho;
             }
             else
             {
                 Console.WriteLine("Ops... Tente novamente com um valor válido!");
                 Program.PressioneQualquerTeclaParaContinuar();
-                DefinirTamanho();
+                DefinirTamanho(qtdAlfabeto);
             }
 
         }

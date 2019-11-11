@@ -41,9 +41,9 @@ namespace SimplexMaxMin
                 FuncaoObjetivo = new FuncaoObjetivo(0);
                 Restricoes.Clear();
 
-                FuncaoObjetivo.DefinirTamanho();
+                FuncaoObjetivo.DefinirTamanho(Restricoes.Capacity);
             }
-            //Program.Menu();
+            Program.Menu();
         }
 
         public void DefinirQuantidadeRestricoes()
@@ -65,7 +65,7 @@ namespace SimplexMaxMin
                     DefinirQuantidadeRestricoes();
                 }
             }
-            Program.Menu();
+            //Program.Menu();
         }
 
         public bool PodeDefinirQuantidade()
