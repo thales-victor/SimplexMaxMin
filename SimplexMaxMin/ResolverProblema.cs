@@ -10,7 +10,7 @@ namespace SimplexMaxMin
 
         public Algoritmo Resolver(Algoritmo algoritmo)
         {
-            if (algoritmo.TipoAlgoritmo == TipoAlgoritmo.Maximizacao)
+            if (algoritmo.TipoDeAlgoritmo == TipoAlgoritmo.Maximizacao)
                 return ResolverMaximizacao(algoritmo);
             else
                 return ResolverMinimizacao(algoritmo);

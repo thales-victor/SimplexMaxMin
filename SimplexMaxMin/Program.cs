@@ -41,7 +41,7 @@ namespace SimplexMaxMin
                 foreach (var restricao in Algoritmo.Restricoes)
                 {
                     //restricao.ImprimirRestricao(Algoritmo.FuncaoObjetivo.Valores.Length, Algoritmo.TipoAlgoritmo, Algoritmo.Restricoes.Count);
-                    restricao.ImprimirRestricao(Algoritmo.FuncaoObjetivo.Valores.Length, Algoritmo.TipoAlgoritmo);
+                    restricao.ImprimirRestricao(Algoritmo.FuncaoObjetivo.Valores.Length, Algoritmo.TipoDeAlgoritmo);
                     Console.WriteLine("");
                 }
             }
@@ -97,17 +97,17 @@ namespace SimplexMaxMin
             {
                 case ConsoleKey.F1:
                     {
-                        Algoritmo.DefinirTamanho();
+                        Algoritmo.DefinirQuantidadeDeVariaveis();
                     }
                     break;
                 case ConsoleKey.F2:
                     {
-                        Algoritmo.FuncaoObjetivo.Inserir();
+                        Algoritmo.InserirFuncaoObjetiva();
                     }
                     break;
                 case ConsoleKey.F3:
                     {
-                        Algoritmo.DefinirQuantidadeRestricoes();
+                        Algoritmo.DefinirQuantidadeDeRestricoes();
                     }
                     break;
                 case ConsoleKey.F4:
