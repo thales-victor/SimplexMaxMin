@@ -17,33 +17,39 @@ namespace SimplexMaxMin
         {
             Console.Clear();
 
-            Console.WriteLine("Pressione F1 para alterar o tamanho da função objetivo");
-            Console.WriteLine("Pressione F2 para inserir a função objetivo");
+            Console.WriteLine("Pressione F1 para alterar o tamanho da função objetiva");
+            Console.WriteLine("Pressione F2 para inserir a função objetiva");
             Console.WriteLine("Pressione F3 para alterar a quantidade das restrições");
             Console.WriteLine("Pressione F4 para inserir as restrições");
             Console.WriteLine("Pressione F5 para solucionar o Simplex passo-a-passo");
             Console.WriteLine("Pressione F6 para solucionar o Simplex até o final");
 
-            if (Algoritmo.FuncaoObjetivo.JaFoiCadastrado)
+            if (Algoritmo.JaFoiCadastradoAFuncaoObjetiva)
             {
                 Console.WriteLine("");
                 Console.WriteLine("");
-                Console.WriteLine("Funcao Objetivo:");
-                Algoritmo.FuncaoObjetivo.ImprimirFuncaoObjetivo();
+                Console.WriteLine("Função Objetiva:");
+                Algoritmo.ImprimirFuncaoObjetiva();
             }
 
-            if (Algoritmo.Restricoes.Any())
+            //se tiver pelo menos uma restrição (no caso, verifico se já tem a primeira)
+            if (Algoritmo.Problema[0, 0] != 0)
             {
                 Console.WriteLine("");
                 Console.WriteLine("");
                 Console.WriteLine("Restrições:");
+                Console.WriteLine("");
+                Console.WriteLine("");
 
-                foreach (var restricao in Algoritmo.Restricoes)
+                for (int i = 0; i < Algoritmo.Problema.GetLength(0); i++)
                 {
-                    //restricao.ImprimirRestricao(Algoritmo.FuncaoObjetivo.Valores.Length, Algoritmo.TipoAlgoritmo, Algoritmo.Restricoes.Count);
-                    restricao.ImprimirRestricao(Algoritmo.FuncaoObjetivo.Valores.Length, Algoritmo.TipoDeAlgoritmo);
-                    Console.WriteLine("");
+                    for (int j = 0; j < Algoritmo.Problema.GetLength(1); j++)
+                    {
+                        if (Algoritmo.Problema[i, j] != 0)
+                            Algoritmo.ImprimirRestricao(i);
+                    }
                 }
+
             }
 
             try
@@ -53,7 +59,7 @@ namespace SimplexMaxMin
             catch
             {
                 Console.WriteLine("");
-                Console.WriteLine("Ocorreu algum erro!");
+                Console.WriteLine("Ocorreu algum erro! Tente novamente!");
                 PressioneQualquerTeclaParaContinuar();
                 Menu();
             }
@@ -86,7 +92,7 @@ namespace SimplexMaxMin
             SelecionarOpcaoMenu(ConsoleKey.F3);
 
             Console.WriteLine("");
-            Console.WriteLine("Agora, você deve determinar quantas variáveis a função objetivo terá");
+            Console.WriteLine("Agora, você deve determinar qual será o tamanho da função objetiva");
             PressioneQualquerTeclaParaContinuar();
             SelecionarOpcaoMenu(ConsoleKey.F1);
         }
@@ -97,7 +103,7 @@ namespace SimplexMaxMin
             {
                 case ConsoleKey.F1:
                     {
-                        Algoritmo.DefinirQuantidadeDeVariaveis();
+                        Algoritmo.DefinirTamanhoFuncaoObjetiva();
                     }
                     break;
                 case ConsoleKey.F2:
@@ -118,7 +124,7 @@ namespace SimplexMaxMin
                 case ConsoleKey.F6:
                     {
                         ResolverProblema resolverProblema = new ResolverProblema();
-                        resolverProblema.Resolver(Algoritmo);
+                        //resolverProblema.Resolver(Algoritmo);
                     }
                     break;
 
