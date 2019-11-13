@@ -343,5 +343,84 @@ namespace SimplexMaxMin
             }
             return true;
         }
+
+        public void ResolverProblema()
+        {
+            if (TipoDeAlgoritmo == TipoAlgoritmo.Maximizacao)
+                ResolverComMaximizacao();
+            else
+                ResolverComMinimizacao();
+        }
+
+        private void ResolverComMaximizacao()
+        {
+            double menorNegativo = 0;
+            int posicaoColunaDoMenorNegativoEmZ = -1;
+
+            //procurando o menor valor negativo em Z
+            for (int i = 0; i < Problema.GetLength(1); i++)
+            {
+                double valor = Problema[QuantidaDeRestricoes, i];
+                if (valor < menorNegativo)
+                {
+                    menorNegativo = valor;
+                    posicaoColunaDoMenorNegativoEmZ = i;
+                }
+            }
+
+            //se a posicao for -1, não achou número negativo e está pronto
+            if (posicaoColunaDoMenorNegativoEmZ != -1)
+            {
+                //  Identificando a linha que conterá o pivô, dividindo os elementos do termo independente (coluna L) pelos
+                //  elementos na mesma linha e na coluna que teve o menor valor negativo em Z
+                double menorValorPositivoDaColunaLimiteDivididoPeloElementoNaColunaSelecionada = Double.MaxValue;
+                int linhaQueContemOPivo = -1;
+                double pivo = -1;
+                for (int i = 0; i < QuantidaDeRestricoes; i++)
+                {
+                    double valor = Problema[i, posicaoColunaDoMenorNegativoEmZ];
+                    double colunaL = Problema[i, TamanhoFuncaoObjetiva + QuantidaDeRestricoes];
+                    double resultado = colunaL / valor;
+
+                    if (resultado > 0 && resultado < menorValorPositivoDaColunaLimiteDivididoPeloElementoNaColunaSelecionada)
+                    {
+                        menorValorPositivoDaColunaLimiteDivididoPeloElementoNaColunaSelecionada = resultado;
+                        linhaQueContemOPivo = i;
+                        pivo = valor;
+                    }
+                }
+
+                //armazenando a letra ou variavel que está entrando na base
+                if (posicaoColunaDoMenorNegativoEmZ - TamanhoFuncaoObjetiva >= 0)
+                    LetrasNaBase[linhaQueContemOPivo, 0] = Alfabeto.Letras[posicaoColunaDoMenorNegativoEmZ - TamanhoFuncaoObjetiva];
+                else
+                    LetrasNaBase[linhaQueContemOPivo, 0] = $"x{posicaoColunaDoMenorNegativoEmZ + 1}";
+
+                // dividindo a linha que contém o pivo, para que ele fique igual a 1.
+                for (int i = 0; i < Problema.GetLength(1); i++)
+                {
+                    Problema[linhaQueContemOPivo, i] /= pivo;
+                }
+
+                // Aplicando o Gauss para as outras linhas
+                for (int i = 0; i <= QuantidaDeRestricoes; i++)
+                {
+                    if (i != linhaQueContemOPivo)
+                    {
+                        //valor que será utilizado para zerar o elemento da mesma coluna do pivô
+                        double aux = Problema[i, posicaoColunaDoMenorNegativoEmZ] * -1;
+                        for (int j = 0; j < Problema.GetLength(1); j++)
+                        {
+                            double elementoDaLinhaDoPivo = Problema[linhaQueContemOPivo, j];
+                            Problema[i,j] += aux * elementoDaLinhaDoPivo;
+                        }
+                    }
+                }
+            }
+        }
+        private void ResolverComMinimizacao()
+        {
+
+        }
     }
 }

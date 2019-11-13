@@ -38,16 +38,11 @@ namespace SimplexMaxMin
                 Console.WriteLine("");
                 Console.WriteLine("");
                 Console.WriteLine("Restrições:");
-                Console.WriteLine("");
-                Console.WriteLine("");
 
-                for (int i = 0; i < Algoritmo.Problema.GetLength(0); i++)
+                for (int i = 0; i < Algoritmo.QuantidaDeRestricoes; i++)
                 {
-                    for (int j = 0; j < Algoritmo.Problema.GetLength(1); j++)
-                    {
-                        if (Algoritmo.Problema[i, j] != 0)
-                            Algoritmo.ImprimirRestricao(i);
-                    }
+                    Algoritmo.ImprimirRestricao(i);
+                    Console.WriteLine("");
                 }
 
             }
@@ -55,6 +50,7 @@ namespace SimplexMaxMin
             try
             {
                 SelecionarOpcaoMenu(Console.ReadKey().Key);
+                Menu();
             }
             catch
             {
@@ -123,8 +119,7 @@ namespace SimplexMaxMin
                     break;
                 case ConsoleKey.F6:
                     {
-                        ResolverProblema resolverProblema = new ResolverProblema();
-                        //resolverProblema.Resolver(Algoritmo);
+                        Algoritmo.ResolverProblema();
                     }
                     break;
 
