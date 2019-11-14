@@ -368,59 +368,123 @@ namespace SimplexMaxMin
                 }
             }
 
+            ImprimirTabela();
+
             //se a posicao for -1, não achou número negativo e está pronto
-            if (posicaoColunaDoMenorNegativoEmZ != -1)
+            if (posicaoColunaDoMenorNegativoEmZ == -1)
+                return;
+
+            //  Identificando a linha que conterá o pivô, dividindo os elementos do termo independente (coluna L) pelos
+            //  elementos na mesma linha e na coluna que teve o menor valor negativo em Z
+            double menorValorPositivoDaColunaLimiteDivididoPeloElementoNaColunaSelecionada = Double.MaxValue;
+            int linhaQueContemOPivo = -1;
+            double pivo = -1;
+            for (int i = 0; i < QuantidaDeRestricoes; i++)
             {
-                //  Identificando a linha que conterá o pivô, dividindo os elementos do termo independente (coluna L) pelos
-                //  elementos na mesma linha e na coluna que teve o menor valor negativo em Z
-                double menorValorPositivoDaColunaLimiteDivididoPeloElementoNaColunaSelecionada = Double.MaxValue;
-                int linhaQueContemOPivo = -1;
-                double pivo = -1;
-                for (int i = 0; i < QuantidaDeRestricoes; i++)
-                {
-                    double valor = Problema[i, posicaoColunaDoMenorNegativoEmZ];
-                    double colunaL = Problema[i, TamanhoFuncaoObjetiva + QuantidaDeRestricoes];
-                    double resultado = colunaL / valor;
+                double valor = Problema[i, posicaoColunaDoMenorNegativoEmZ];
+                double colunaL = Problema[i, TamanhoFuncaoObjetiva + QuantidaDeRestricoes];
+                double resultado = colunaL / valor;
 
-                    if (resultado > 0 && resultado < menorValorPositivoDaColunaLimiteDivididoPeloElementoNaColunaSelecionada)
-                    {
-                        menorValorPositivoDaColunaLimiteDivididoPeloElementoNaColunaSelecionada = resultado;
-                        linhaQueContemOPivo = i;
-                        pivo = valor;
-                    }
+                if (resultado > 0 && resultado < menorValorPositivoDaColunaLimiteDivididoPeloElementoNaColunaSelecionada)
+                {
+                    menorValorPositivoDaColunaLimiteDivididoPeloElementoNaColunaSelecionada = resultado;
+                    linhaQueContemOPivo = i;
+                    pivo = valor;
                 }
 
-                //armazenando a letra ou variavel que está entrando na base
-                if (posicaoColunaDoMenorNegativoEmZ - TamanhoFuncaoObjetiva >= 0)
-                    LetrasNaBase[linhaQueContemOPivo, 0] = Alfabeto.Letras[posicaoColunaDoMenorNegativoEmZ - TamanhoFuncaoObjetiva];
-                else
-                    LetrasNaBase[linhaQueContemOPivo, 0] = $"x{posicaoColunaDoMenorNegativoEmZ + 1}";
+                ImprimirTabela();
+            }
 
-                // dividindo a linha que contém o pivo, para que ele fique igual a 1.
-                for (int i = 0; i < Problema.GetLength(1); i++)
-                {
-                    Problema[linhaQueContemOPivo, i] /= pivo;
-                }
+            //armazenando a letra ou variavel que está entrando na base
+            if (posicaoColunaDoMenorNegativoEmZ - TamanhoFuncaoObjetiva >= 0)
+                LetrasNaBase[linhaQueContemOPivo, 0] = Alfabeto.Letras[posicaoColunaDoMenorNegativoEmZ - TamanhoFuncaoObjetiva];
+            else
+                LetrasNaBase[linhaQueContemOPivo, 0] = $"x{posicaoColunaDoMenorNegativoEmZ + 1}";
 
-                // Aplicando o Gauss para as outras linhas
-                for (int i = 0; i <= QuantidaDeRestricoes; i++)
+            // dividindo a linha que contém o pivo, para que ele fique igual a 1.
+            for (int i = 0; i < Problema.GetLength(1); i++)
+            {
+                Problema[linhaQueContemOPivo, i] /= pivo;
+            }
+
+            // Aplicando o Gauss para as outras linhas
+            for (int i = 0; i <= QuantidaDeRestricoes; i++)
+            {
+                if (i != linhaQueContemOPivo)
                 {
-                    if (i != linhaQueContemOPivo)
+                    //valor que será utilizado para zerar o elemento da mesma coluna do pivô
+                    double aux = Problema[i, posicaoColunaDoMenorNegativoEmZ] * -1;
+                    for (int j = 0; j < Problema.GetLength(1); j++)
                     {
-                        //valor que será utilizado para zerar o elemento da mesma coluna do pivô
-                        double aux = Problema[i, posicaoColunaDoMenorNegativoEmZ] * -1;
-                        for (int j = 0; j < Problema.GetLength(1); j++)
-                        {
-                            double elementoDaLinhaDoPivo = Problema[linhaQueContemOPivo, j];
-                            Problema[i,j] += aux * elementoDaLinhaDoPivo;
-                        }
+                        double elementoDaLinhaDoPivo = Problema[linhaQueContemOPivo, j];
+                        Problema[i,j] += aux * elementoDaLinhaDoPivo;
                     }
                 }
             }
+            Console.WriteLine("");
         }
         private void ResolverComMinimizacao()
         {
+            
+        }
 
+        private void ImprimirTabela()
+        {
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("");
+            
+            int linhas = Problema.GetLength(0);
+            int colunas = Problema.GetLength(1);
+
+            ColocarEspacamento("");
+
+            for (int i = 1; i <= TamanhoFuncaoObjetiva; i++)
+            {
+                var caracter = $"x{i}";
+                Console.Write(caracter);
+                ColocarEspacamento(caracter);
+            }
+
+            for (int i = 0; i < LetrasNaBase.GetLength(0); i++)
+            {
+                var caracter = LetrasNaBase[i, 0];
+                Console.Write(caracter);
+                ColocarEspacamento(caracter);
+            }
+            Console.Write("L");
+            Console.WriteLine("");
+
+            for (int linha = 0; linha < linhas; linha++)
+            {
+                var letra = linha + 1 > TamanhoFuncaoObjetiva ? "Z" : $"x{linha+1}";
+                Console.Write(letra);
+                ColocarEspacamento(letra);
+
+                for (int coluna = 0; coluna < colunas; coluna++)
+                {
+                    var caracter = Problema[linha, coluna];
+                    Console.Write(caracter);
+                    ColocarEspacamento(caracter);
+                }
+                Console.WriteLine("");
+            }
+        }
+
+        private void ColocarEspacamento(double caracter)
+        {
+            ColocarEspacamento(caracter.ToString());
+        }
+
+        private void ColocarEspacamento(string caracter)
+        {
+            int espacamento = 8;
+            int tamanhoDoCaracter = caracter.Length;
+
+            for (int espaco = 0; espaco < espacamento - tamanhoDoCaracter; espaco++)
+            {
+                Console.Write(" ");
+            }
         }
     }
 }
