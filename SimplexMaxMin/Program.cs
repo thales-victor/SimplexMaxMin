@@ -21,8 +21,8 @@ namespace SimplexMaxMin
             Console.WriteLine("Pressione F2 para inserir a função objetiva");
             Console.WriteLine("Pressione F3 para alterar a quantidade das restrições");
             Console.WriteLine("Pressione F4 para inserir as restrições");
-            Console.WriteLine("Pressione F5 para solucionar o Simplex passo-a-passo");
-            Console.WriteLine("Pressione F6 para solucionar o Simplex até o final");
+            Console.WriteLine("Pressione F5 para solucionar o Simplex até o final");
+            Console.WriteLine("Pressione F10 para começar novamente");
 
             if (Algoritmo.JaFoiCadastradoAFuncaoObjetiva)
             {
@@ -117,9 +117,15 @@ namespace SimplexMaxMin
                         Algoritmo.InserirRestricao();
                     }
                     break;
-                case ConsoleKey.F6:
+                case ConsoleKey.F5:
                     {
                         Algoritmo.ResolverProblema();
+                        PressioneQualquerTeclaParaContinuar();
+                    }
+                    break;
+                case ConsoleKey.F10:
+                    {
+                        Init();
                     }
                     break;
 
